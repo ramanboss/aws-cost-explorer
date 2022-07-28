@@ -25,6 +25,7 @@ def lambda_handler(event, context):
     start = datetime.datetime(year=start.year, month=start.month, day=1)
     # Get the month as string for email purposes
     month = start.strftime('%Y-%m')
+    #print("hello")
 
     # Convert them to strings
     start = start.strftime('%Y-%m-%d')
@@ -36,7 +37,7 @@ def lambda_handler(event, context):
             'Start': start,
             'End':  end
         },
-        Granularity='MONTHLY',
+        Granularity='DAILY',
         Metrics=['BlendedCost'],
         GroupBy=[
             {
@@ -45,7 +46,8 @@ def lambda_handler(event, context):
             },
         ]
     )
-
+    
+    print (response)
     #pprint.pprint()
 
     tsv_lines = []
@@ -60,8 +62,8 @@ def lambda_handler(event, context):
         line = "{}\t${:,.2f}".format(name, amount)
         print(line)
         tsv_lines.append(line)
-
-
+         #print(line)
+    
     send_email(month, "\n".join(tsv_lines))
 
 
@@ -69,8 +71,8 @@ def lambda_handler(event, context):
 
 def send_email(month, attachment):
     msg = MIMEMultipart()
-    msg['From']  = "Aaron Gussman <aaron.gussman@digitalglobe.com>"
-    msg['To'] = "aaron.gussman@digitalglobe.com"
+    msg['From']  = "Raman singh <ramansinghkushwah556@gmail.com>"
+    msg['To'] = "<ramansinghkushwah556@gmail.com>"
     msg['Subject'] = "Monthly AWS Cost Breakdown: {}".format(month)
 
     # what a recipient sees if they don't use an email reader
