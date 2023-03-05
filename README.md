@@ -2,7 +2,7 @@
 
 A simple Python 3 script to run via AWS Lambda to report last month's billing broken down by Tag.
 
-# Setup
+# Setup---
 
 Creating a python3 virtualenv:
 ```
